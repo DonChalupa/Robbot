@@ -1,6 +1,5 @@
 from discord import Embed, Color
 
-
 '''
 Drink Object
     Processes json data retrieved from the request object and
