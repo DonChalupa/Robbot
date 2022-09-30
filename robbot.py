@@ -12,8 +12,8 @@ from util.Music import Music
 CFG_FILENAME = 'config.json'
 
 load_dotenv()
-#TOKEN = os.getenv('DISCORD_TOKEN')
-TOKEN = os.getenv('LOCAL_TOKEN')
+TOKEN = os.getenv('DISCORD_TOKEN')
+#TOKEN = os.getenv('LOCAL_TOKEN')
 
 with open(CFG_FILENAME) as cfg:
     CFG = json.load(cfg)
