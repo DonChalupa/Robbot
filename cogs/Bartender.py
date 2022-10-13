@@ -40,7 +40,7 @@ class Bartender(commands.Cog, name='Bartender', description=BARTENDER_DESCRIPTIO
             return
 
 #HELPER FUNCTIONS
-    async def get_drink(self,ctx:commands.Context, filter_url:str) -> Drink:
+    async def get_drink(self, ctx:commands.Context, filter_url:str) -> Drink:
         try:
             res = req.get(filter_url)
             res.raise_for_status()
@@ -60,10 +60,13 @@ class Bartender(commands.Cog, name='Bartender', description=BARTENDER_DESCRIPTIO
         resolved_url = self._get_drink_lookup_url(DRINK_URL, filter)
         return resolved_url
 
-    def _get_drink_lookup_url(self, DRINK_URL, filter) -> str:
+    async def _get_drink_lookup_url(self, ctx:commands.Context, DRINK_URL, filter) -> str:
         filter_url = DRINK_URL + filter
-        drink_list = req.get(filter_url).json()['drinks']
-        drink_id = r.choice(drink_list)['idDrink']
+        try:
+            drink_list = req.get(filter_url).json()['drinks']
+            drink_id = r.choice(drink_list)['idDrink']
+        except req.HTTPError as ex:
+            await ctx.send(f'Ayo, something went wrong with the request: \n{ex}')
 
         return DRINK_URL + f'lookup.php?i={drink_id}'
 
